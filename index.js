@@ -55,6 +55,18 @@ app.put('/books/:id', async(req,res)=>{
     }
 })
 
+//delete a certain book
+app.delete('/books/:id', async(req, res)=>{
+    try {
+        const {id} = req.params
+        const book = await Book.findByIdAndDelete(id)
+        if(!book) console.log(`Book with id ${id} not found`)
+        res.status(200).json(book)
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+})
+
 //import and use mongo db
 const mongoose = require('mongoose')
 mongoose.set("strictQuery",false)
